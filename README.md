@@ -11,6 +11,7 @@ Installation
 -----------
 
 * Clone this folder into the ``Experiments/`` folder
+* Move the brain file "visual__segmentation.py" in $HBP/Models/brain_model/
 * The following repos are needed in the `GazeboRosPackages/` folder:
   * [embodied_attention](https://github.com/HBPNeurorobotics/embodied_attention)
   * **Optinal** - [holographic](https://github.com/HBPNeurorobotics/holographic)
