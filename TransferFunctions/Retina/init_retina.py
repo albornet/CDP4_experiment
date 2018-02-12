@@ -16,7 +16,7 @@ def init_retina(t, retina):
 		n_center       = 2
 
 		# Slow transient
-		lambda_OPL     = 1000 # Hz
+		lambda_OPL     = 100.0 #1000 # Hz
 		w_adap         = 0.8
 		tau_adap       = 100  # ms
 
@@ -46,7 +46,7 @@ def init_retina(t, retina):
 		import pyretina
 		retina_ = pyretina.Retina()
 		retina_.TempStep(1)          # simulation step (in ms)
-		retina_.PixelsPerDegree(1.0) # pixels per degree of visual angle
+		retina_.PixelsPerDegree(0.5) # pixels per degree of visual angle ; original: 1.0 ; isn't it degree per pixel????
 		retina_.DisplayDelay(0)      # display delay
 		retina_.DisplayZoom(1)       # display zoom
 		retina_.DisplayWindows(3)    # Displays per row
@@ -79,7 +79,7 @@ def init_retina(t, retina):
 		retina_.Create('GaussFilter',        'spatial_trs_ON',   {'sigma': sigma_ganglion})
 
 		# Ganglion OFF-cells
-		retina_.Create('Parrot',             'parrot_OFF',       {'Ganglion': -1.0}) # OFF inverts current
+		retina_.Create('Parrot',             'parrot_OFF',       {'gain': -1.0}) # OFF inverts current
 		retina_.Create('HighPass',           'highpass_trs_OFF', {'w': w_trs, 'tau': tau_trs})
 		retina_.Create('Rectification',      'rect_trs_OFF',     {'T0': T0_BG, 'lambda': lambda_BG, 'V_th': v_BG})
 		retina_.Create('GaussFilter',        'spatial_trs_OFF',  {'sigma': sigma_ganglion})
@@ -130,13 +130,9 @@ def init_retina(t, retina):
 
 
 		#################################
-		### DISPLAY AND CREATE RETINA ###
+		### CREATE AND DISPLAY RETINA ###
 		#################################
 
-		# retina_.Show('Input',          True, {'margin': 0})
-		# retina_.Show('highpass_OPL',   True, {'margin': 0})
-		# retina_.Show('tmp_center',     True, {'margin': 0})
-		# retina_.Show('rect_trs_ON',    True, {'margin': 0})
+		retina.value = retina_
 		retina_.Show('parrot_bio_OFF', True, {'margin': 0})
 		retina_.Show('parrot_bio_ON',  True, {'margin': 0})
-		retina.value = retina_

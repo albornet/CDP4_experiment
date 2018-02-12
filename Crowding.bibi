@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bibi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.humanbrainproject.eu/SP10/2014/BIBI" xsi:schemaLocation="http://schemas.humanbrainproject.eu/SP10/2014/BIBI ../bibi_configuration.xsd">
+
+  <!-- Brain -->
+  <brainModel>
+    <file>brain_model/visual_segmentation.py</file>
+  </brainModel>
+  <bodyModel>icub_model/model.sdf</bodyModel>
+
+  <!-- Logistic -->
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Logistic/blink_logic.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Logistic/all_spikes_monitor.py"/>
+
+  <!-- Retina (or not) -->
+  <!-- <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/grab_image.py"/> -->
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/grab_retina_output.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/init_retina.py"/>
+
+  <!-- Laminart model -->
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Laminart/send_segmentation_signals.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Laminart/plot_V2_activity.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Laminart/plot_V4_activity.py"/>
+
+  <!-- Saccades generation -->
+  <!-- <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/SaccadeGeneration/generate_saccades.py"/> -->
+
+  <!-- Gaze stabilization model --><!-- 
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/GazeStabilization/move_head.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/GazeStabilization/move_eye.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/GazeStabilization/move_torso.py"/>
+  <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/GazeStabilization/update_poses.py"/> -->
+
+</bibi>

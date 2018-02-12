@@ -7,9 +7,9 @@ from cv_bridge import CvBridge
 def blink_logic(t, isBlinking, isSegmenting):
     
     # Loop = "nnnsnnnnnbbb", with n -> nothing, s -> segment, b -> blink
-    loopDuration       = 0.7
-    blinkStart         = 0.6
-    segmentationStart  = 0.1
+    loopDuration       = 1.0
+    blinkStart         = 0.9
+    segmentationStart  = 0.2
 
     isBlinking.value   = False
     isSegmenting.value = False
@@ -25,5 +25,5 @@ def blink_logic(t, isBlinking, isSegmenting):
             clientLogger.info('A blinking event happend after %ss of simulation! Duration: %ss...' %(str(t), str(blinkDuration)))
 
     # Choose whether this is a normal or a segmentation time-step
-    if timeInLoop >= segmentationStart and timeInLoop < segmentationStart + 0.02:
+    if timeInLoop >= segmentationStart and timeInLoop < segmentationStart + 0.02 and t > 4:
         isSegmenting.value = True
