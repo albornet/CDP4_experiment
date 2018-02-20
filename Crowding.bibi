@@ -11,7 +11,7 @@
   <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Logistic/blink_logic.py"/>
   <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Logistic/all_spikes_monitor.py"/>
 
-  <!-- Retina (or not) -->
+  <!-- Retina (last 2 TFs), or not (first TF) -->
   <!-- <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/grab_image.py"/> -->
   <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/grab_retina_output.py"/>
   <transferFunction xsi:type="PythonTransferFunction" src="TransferFunctions/Retina/init_retina.py"/>

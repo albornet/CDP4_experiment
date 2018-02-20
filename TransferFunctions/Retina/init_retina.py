@@ -17,7 +17,7 @@ def init_retina(t, retina):
 
 		# Slow transient
 		lambda_OPL     = 100.0 #1000 # Hz
-		w_adap         = 0.8
+		w_adap         = 0.5  # 0.8
 		tau_adap       = 100  # ms
 
 		# Amacrine parameters (gain control)
@@ -58,7 +58,8 @@ def init_retina(t, retina):
 		#############################
 
 		# Light cones and OPL (outer plexiform layer)
-		retina_.Create('GaussFilter',        'spatial_center',   {'sigma': sigma_center})
+		# retina_.Create('GaussFilter',        'spatial_center',   {'sigma': sigma_center})
+		retina_.Create('SpaceVariantGaussFilter', 'spatial_center',   {'sigma': sigma_center, 'K': 0.1, 'R0': 30})
 		retina_.Create('LinearFilter',       'tmp_center',       {'type': 'Gamma','tau': tau_center,'n': n_center})
 		retina_.Create('GaussFilter',        'spatial_surround', {'sigma': sigma_surround})
 		retina_.Create('LinearFilter',       'tmp_surround',     {'type': 'Exp', 'tau': tau_surround})
@@ -87,8 +88,8 @@ def init_retina(t, retina):
 		# Output of ganglion cells (gains)
 		retina_.Create('Parrot',             'parrot_norm1',     {'gain': 1.0/255.0}) # normalize input luminance
 		retina_.Create('Parrot',             'parrot_norm2',     {'gain': 1.0/255.0}) # normalize input luminance
-		retina_.Create('Parrot',             'parrot_bio_ON',    {'gain': 0.02*0.0000000001*10**12}) # output in pA
-		retina_.Create('Parrot',             'parrot_bio_OFF',   {'gain': 0.02*0.0000000001*10**12}) # otuput in pA
+		retina_.Create('Parrot',             'ganglion_bio_ON',  {'gain': 0.02*0.0000000001*10**12}) # output in pA
+		retina_.Create('Parrot',             'ganglion_bio_OFF', {'gain': 0.02*0.0000000001*10**12}) # otuput in pA
 
 
 		#################################
@@ -125,8 +126,8 @@ def init_retina(t, retina):
 		retina_.Connect('parrot_OFF',       'highpass_trs_OFF', 'Current')
 		retina_.Connect('highpass_trs_OFF', 'rect_trs_OFF',     'Current')
 		retina_.Connect('rect_trs_OFF',     'spatial_trs_OFF',  'Current')
-		retina_.Connect('spatial_trs_ON',   'parrot_bio_ON',    'Current')
-		retina_.Connect('spatial_trs_OFF',  'parrot_bio_OFF',   'Current')
+		retina_.Connect('spatial_trs_ON',   'ganglion_bio_ON',  'Current')
+		retina_.Connect('spatial_trs_OFF',  'ganglion_bio_OFF', 'Current')
 
 
 		#################################
@@ -134,5 +135,5 @@ def init_retina(t, retina):
 		#################################
 
 		retina.value = retina_
-		retina_.Show('parrot_bio_OFF', True, {'margin': 0})
-		retina_.Show('parrot_bio_ON',  True, {'margin': 0})
+		retina_.Show('ganglion_bio_ON',  True, {'margin': 0})
+		retina_.Show('ganglion_bio_OFF', True, {'margin': 0})

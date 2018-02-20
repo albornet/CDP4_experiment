@@ -18,7 +18,7 @@ def grab_retina_output(t, retina, isBlinking, image, inputONToLGN, inputOFFToLGN
         import numpy
         nRows = nrp.config.brain_root.imageNumPixelRows
         nCols = nrp.config.brain_root.imageNumPixelColumns
-        retinaToLGNGain = 500.0
+        retinaToLGNGain = 0.02  # 0.01 is too light
 
         # Transform the image intput in a retina output
         retina.value.Step(CvBridge().imgmsg_to_cv2(image.value))
@@ -27,8 +27,8 @@ def grab_retina_output(t, retina, isBlinking, image, inputONToLGN, inputOFFToLGN
         # if isBlinking.value:
         #     image.value = CvBridge().cv2_to_imgmsg(numpy.zeros(240,320,3))
         if not isBlinking.value:
-            imgON  = retina.value.GetOutput("parrot_bio_ON")
-            imgOFF = retina.value.GetOutput("parrot_bio_OFF")
+            imgON  = retina.value.GetOutput("ganglion_bio_ON")
+            imgOFF = retina.value.GetOutput("ganglion_bio_OFF")
 
         # The retina can output weird values just after its initialization
         if (numpy.max(imgON)-numpy.min(imgON)) < 1 or (numpy.max(imgOFF)-numpy.min(imgOFF)) < 1:
@@ -39,6 +39,8 @@ def grab_retina_output(t, retina, isBlinking, image, inputONToLGN, inputOFFToLGN
         firstCol = int((imgON.shape[1]-nCols)/2)
         inputON  = imgON [firstRow:firstRow+nRows, firstCol:firstCol+nCols]
         inputOFF = imgOFF[firstRow:firstRow+nRows, firstCol:firstCol+nCols]
+        inputON  = inputON  - numpy.mean(inputON )  # cheat?
+        inputOFF = inputOFF - numpy.mean(inputOFF)  # cheat?
 
         # Give the pre-processed image to the LGN (bright and dark inputs)
         if not numpy.isnan(imgON ).all():
